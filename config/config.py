@@ -82,7 +82,7 @@ class AppConfig:
         self.version = app_config.get("version", "1.0.0")
         self.debug = app_config.get("debug", False)
 
-        logging_config = logging_config.get("logging", {})
+        logging_config = self.settings.get("logging", {})
         self.log_level = logging_config.get("log_level",
                                             "INFO")
         self.log_to_file = logging_config.get(

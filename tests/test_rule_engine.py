@@ -34,4 +34,66 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from chatbot.rules import (
+    MandatoryEntityRule,
+    NegativeKeywordRule,
+    RuleEngine,
+)
 
+
+def test_mandatory_rule_missing_entry():
+    rule = MandatoryEntityRule(penalty=-3)
+
+    intent_config = {"required_entities": ["order_id"]}
+    entities = {}
+
+    penalty = rule.apply(intent_config, entities)
+
+    assert penalty == -3
+
+
+def test_mandatory_rule_present_entity():
+    rule = MandatoryEntityRule(penalty=-3)
+
+    intent_config = {"required_entities": ["order_id"]}
+    entities = {"order_id": "123"}
+
+    penalty = rule.apply(intent_config, entities)
+
+    assert penalty == 0
+
+
+def test_negative_keyword_rule():
+    rule = NegativeKeywordRule(penalty=-5)
+
+    intent_config = {"negative_keywords": ["refund"]}
+    tokens = ["i", "want", "refund"]
+
+    penalty = rule.apply(intent_config, tokens)
+
+    assert penalty == -5
+
+def test_rule_engine_combined():
+    rules_config = {
+        "mandatory_entity_rule": {
+            "penalty_if_missing": -3
+        },
+    }
+    
+    engine = RuleEngine(rules_config)
+    
+    intent_config = {
+        "required_entities": ["order_id"],
+        "negative_keywords": ["refund"],
+    }
+
+    tokens = ["refund"]
+    entities = {}
+
+    penalty = engine.apply_rules(
+        intent_config,
+        tokens,
+        entities
+    )
+
+    assert penalty == -8

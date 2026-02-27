@@ -34,4 +34,50 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from config.config import AppConfig
+from chatbot.engine.intent_classifier import IntentClassifier
+
+
+def test_intent_classification_book_flight():
+    config = AppConfig()
+    classifier = IntentClassifier(config)
+
+    text = "Book a flight to London"
+
+    results = classifier.classify(text)
+
+    # Get highest score intent
+    best = max(results, key=lambda x: x["score"])
+
+    assert best["intent"] == "BookFlight"
+    assert best["score"] > 0
+    assert best["entities"].get("city") == "London"
+
+
+def test_intent_classification_cancel_order():
+    config = AppConfig()
+    classifier = IntentClassifier(config)
+
+    text = "Cancel order 7890"
+
+    results = classifier.classify(text)
+    best = max(results, key=lambda x: x["score"])
+
+    assert best["intent"] == "CancelOrder"
+    assert best["entities"].get("order_id") == "7890"
+
+
+def test_intent_classification_fallback():
+    config = AppConfig()
+    classifier = IntentClassifier(config)
+
+    text = "I like turtles"
+
+    results = classifier.classify(text)
+    best = max(results, key=lambda x: x["score"])
+
+    # Fallback might still get highest score = 0
+    assert best["intent"] in [
+        "Fallback", "BookFlight", "CancelOrder"
+    ]
 

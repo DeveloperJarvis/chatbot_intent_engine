@@ -65,7 +65,7 @@ def test_keyword_matcher():
 def test_regex_engine():
     regex_engine = RegexEngine()
 
-    patterns = [r"cancel order (?<order_id>\d+)"]
+    patterns = [r"cancel order (?P<order_id>\d+)"]
     text = "Cancel order 5678"
 
     matches, entities = regex_engine.match(text, patterns)

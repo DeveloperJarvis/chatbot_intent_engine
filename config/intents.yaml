@@ -1,5 +1,5 @@
 intents:
-  BookFight:
+  BookFlight:
     description: Handle flight booking requests
     priority: 3
     confidence_threshold: 6
