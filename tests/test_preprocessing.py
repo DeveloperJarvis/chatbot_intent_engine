@@ -34,4 +34,52 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+import pytest
+from chatbot.preprocessing import (
+    TextCleaner,
+    Tokenizer,
+    Normalizer,
+    EntityExtractor,
+)
 
+
+def test_text_cleaner():
+    cleaner = TextCleaner()
+    text = "Hello, World!"
+    cleaned = cleaner.clean(text)
+
+    assert cleaned == "hello world"
+
+
+def test_tokenizer():
+    tokenizer = Tokenizer()
+    tokens = tokenizer.tokenize("hello world")
+
+    assert tokens == ["hello", "world"]
+
+
+def test_normalizer():
+    normalizer = Normalizer()
+    tokens = ["booking", "flight"]
+
+    normalized = normalizer.normalize(tokens)
+    
+    assert normalized == tokens
+
+
+def test_entity_extractor_order():
+    extractor = EntityExtractor()
+    text = "Cancel order 12345"
+
+    entities = extractor.extract(text)
+
+    assert entities.get("order_id") == "12345"
+
+
+def test_entity_extractor_city():
+    extractor = EntityExtractor()
+    text = "Book flight to Paris"
+
+    entities = extractor.extract(text)
+
+    assert entities.get("city") == "Paris"

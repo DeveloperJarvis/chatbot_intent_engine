@@ -35,3 +35,40 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# priority rule
+# --------------------------------------------------
+class PriorityRule:
+    """
+    Resolves ties using priority and entity count
+    """
+
+    def resolve(self, scored_intents: list) -> dict:
+        """
+        scored_intents format:
+        [
+            {
+                "intent": "BookFlight",
+                "score": 8,
+                "priority": 3,
+                "entity_count": 1,
+            }
+        ]
+        """
+
+        if not scored_intents:
+            return None
+        
+        # Sort by score, then priotity, then entity count
+        scored_intents = sorted(
+            scored_intents,
+            key=lambda x: (
+                x["score"],
+                x["priority"],
+                x["entity_count"],
+            ),
+            reverse=True,
+        )
+
+        return scored_intents[0]

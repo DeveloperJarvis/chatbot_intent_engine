@@ -34,4 +34,48 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from .mandatory_rule import MandatoryEntityRule
+from .negative_rule import NegativeKeywordRule
 
+
+# --------------------------------------------------
+# rule engine
+# --------------------------------------------------
+class RuleEngine:
+    """
+    Applies rule logic during intent scoring
+    """
+
+    def __init__(self, rules_config: dict):
+        self.rules_config = rules_config
+
+        scoring = rules_config.get("scoring_weights", {})
+
+        self.mandatory_rule = MandatoryEntityRule(
+            penalty=rules_config.get(
+                "mandatory_entity_rule", {}
+            ).get("penalty_if_missing", -3)
+        )
+
+        self.negative_rule = NegativeKeywordRule(
+            penalty=rules_config.get(
+                "negative_keyword_rule", {}
+            ).get("penalty", -5)
+        )
+    
+    def apply_rules(
+            self,
+            intent_config: dict,
+            tokens: list,
+            entities: dict,
+    ) -> int:
+        penalty = 0
+
+        penalty += self.mandatory_rule.apply(
+            intent_config, entities
+        )
+        penalty += self.negative_rule.apply(
+            intent_config, tokens
+        )
+
+        return penalty

@@ -35,3 +35,21 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# normalizer
+# --------------------------------------------------
+class Normalizer:
+    """
+    Basic text normalization (extendable for lemmatization/stemming)
+    """
+
+    def __init__(self, enable_lemmatization: bool = False):
+        self.enable_lemmatization = enable_lemmatization
+    
+    def normalize(self, tokens: list) -> list:
+        if not tokens:
+            return []
+        
+        # Placeholder for future NLP expansion
+        return tokens

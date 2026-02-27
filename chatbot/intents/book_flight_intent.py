@@ -34,4 +34,13 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from .base_intent import BaseIntent
 
+
+# --------------------------------------------------
+# book flight intent
+# --------------------------------------------------
+class BookFlightIntent(BaseIntent):
+
+    def __init__(self):
+        super().__init__("BookFlight")

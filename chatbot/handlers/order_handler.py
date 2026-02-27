@@ -35,3 +35,19 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# order handler
+# --------------------------------------------------
+class OrderHandler:
+    """
+    Handles order cancellation
+    """
+
+    def handle(self, enttities: dict) -> str:
+        order_id = enttities.get("order_id")
+
+        if not order_id:
+            return "Please provide your order ID"
+        
+        return f"Order {order_id} has been successfully cancelled."

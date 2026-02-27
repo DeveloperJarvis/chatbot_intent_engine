@@ -35,3 +35,21 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# pattern matcher
+# --------------------------------------------------
+class PatternMatcher:
+    """
+    Exact phrase matching
+    """
+
+    def match(self, cleaned_text: str,
+              patterns: list) -> int:
+        matches = 0
+
+        for pattern in patterns:
+            if pattern.lower() in cleaned_text:
+                matches += 1
+        
+        return matches

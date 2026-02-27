@@ -34,4 +34,30 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from chatbot.rules.priority_rule import PriorityRule
 
+# --------------------------------------------------
+# intent resolver
+# --------------------------------------------------
+class IntentResolver:
+    """
+    Selects best intent using score and priority rule
+    """
+
+    def __init__(self):
+        self.priority_rule = PriorityRule()
+    
+    def resolve(
+            self,
+            scored_intents: list,
+            fallback_intent: str
+    ):
+        if not scored_intents:
+            return fallback_intent, {}
+        
+        best = self.priority_rule.resolve(scored_intents)
+
+        if not best or best["score"] <= 0:
+            return fallback_intent, {}
+        
+        return best["intent"], best.get("entities", {})

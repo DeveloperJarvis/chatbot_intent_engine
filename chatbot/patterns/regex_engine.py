@@ -34,4 +34,24 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+import re
 
+# --------------------------------------------------
+# regex engine
+# --------------------------------------------------
+class RegexEngine:
+    """
+    Regex pattern matcher with named entity capture
+    """
+
+    def match(self, text: str, regex_patterns: list):
+        matches = 0
+        extracted_entities = {}
+
+        for pattern in regex_patterns:
+            result = re.search(pattern, text, re.IGNORECASE)
+            if result:
+                matches += 1
+                extracted_entities.update(result.groupdict())
+
+        return matches, extracted_entities

@@ -34,4 +34,15 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from .chatbot_engine import ChatbotEngine
+from .intent_classifier import IntentClassifier
+from .intent_resolver import IntentResolver
+from .scorer import IntentScorer
 
+
+__all__ = [
+    "ChatbotEngine",
+    "IntentClassifier",
+    "IntentResolver",
+    "IntentScorer",
+]

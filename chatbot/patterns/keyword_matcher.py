@@ -35,3 +35,20 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# keyword matcher
+# --------------------------------------------------
+class KeywordMatcher:
+    """
+    Keyword scoring matcher
+    """
+
+    def match(self, tokens: list, keywords: dict) -> int:
+        score = 0
+
+        for token in tokens:
+            if token in keywords:
+                score += keywords[token]
+        
+        return score

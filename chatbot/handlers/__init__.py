@@ -34,4 +34,13 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from .booking_handler import BookingHandler
+from .order_handler import OrderHandler
+from .fallback_handler import FallbackHandler
 
+
+__all__ = [
+    "BookingHandler",
+    "OrderHandler",
+    "FallbackHandler",
+]

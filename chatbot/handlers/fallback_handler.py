@@ -35,3 +35,14 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# fallback handler
+# --------------------------------------------------
+class FallbackHandler:
+    """
+    Handles unknown intents
+    """
+
+    def handle(self, entities: dict = None) -> str:
+        return "I'm sorry, I didn't understand that. Could you rephase?"

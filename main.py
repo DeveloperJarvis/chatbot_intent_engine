@@ -30,8 +30,46 @@
 # --------------------------------------------------
 # main MODULE
 # --------------------------------------------------
-
+"""
+Main entry point for Chatbot Intent ENgine
+"""
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+import sys
+from chatbot.engine.chatbot_engine import ChatbotEngine
+from config.config import AppConfig
 
+
+def main():
+    """
+    Application bootstrap
+    """
+    # Load configuration
+    config = AppConfig()
+
+    # Initialize chatbot engine
+    chatbot = ChatbotEngine(config=config)
+
+    print("=" * 50)
+    print(f"{config.app_name} v{config.version}")
+    print("Type 'exit' to quit")
+    print("=" * 50)
+
+    while True:
+        try:
+            user_input = input("\nYou: ")
+            
+            if user_input.lower() in ["exit", "quit"]:
+                print("Exiting chatbot. Goodbye!")
+                break
+
+            response = chatbot.handle_message(user_input)
+            print(f"Bot: {response}")
+        
+        except KeyboardInterrupt:
+            print("\nInterrupted. Exiting...")
+            sys.exit(0)
+        
+        except Exception as e:
+            print(f"Error: {e}")

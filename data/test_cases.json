@@ -1,0 +1,42 @@
+{
+    "test_cases": [
+        {
+            "test_id": "TC_01",
+            "input": "Book a flight to London",
+            "expected_intent": "BookFlight",
+            "expected_entities": {
+                "city": "London"
+            }
+        },
+        {
+            "test_id": "TC_02",
+            "input": "Reserve a flight to Tokyo",
+            "expected_intent": "BookFlight",
+            "expected_entities": {
+                "city": "Tokyo"
+            }
+        },
+        {
+            "test_id": "TC_03",
+            "input": "Cancel order 4567",
+            "expected_intent": "CancelOrder",
+            "expected_entities": {
+                "order_id": "4567"
+            }
+        },
+        {
+            "test_id": "TC_04",
+            "input": "Abort my order 7890",
+            "expected_intent": "CancelOrder",
+            "expected_entities": {
+                "order_id": "7890"
+            }
+        },
+        {
+            "test_id": "TC_05",
+            "input": "I like turtles",
+            "expected_intent": "Fallback",
+            "expected_entities": {}
+        }
+    ]
+}

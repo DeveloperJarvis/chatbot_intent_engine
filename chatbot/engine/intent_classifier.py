@@ -34,4 +34,91 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from chatbot.preprocessing import (
+    TextCleaner,
+    Tokenizer,
+    Normalizer,
+    EntityExtractor,
+)
+from chatbot.patterns import (
+    PatternMatcher,
+    KeywordMatcher,
+    RegexEngine,
+)
+from chatbot.rules.rule_engine import RuleEngine
+from chatbot.engine.scorer import IntentScorer
 
+
+# --------------------------------------------------
+# intent classifier
+# --------------------------------------------------
+class IntentClassifier:
+    """
+    Core classification engine
+    """
+
+    def __init__(self, config):
+        self.config = config
+        self.intents_config = config.get_intents()
+        self.rules_config = config.get_rules()
+
+        self.cleaner = TextCleaner()
+        self.tokenizer = Tokenizer()
+        self.normalizer = Normalizer()
+        self.entity_extractor = EntityExtractor()
+
+        self.pattern_matcher = PatternMatcher()
+        self.keyword_matcher = KeywordMatcher()
+        self.regex_engine = RegexEngine()
+
+        self.rule_engine = RuleEngine(self.rules_config)
+        self.scorer = IntentScorer(self.rules_config)
+    
+    def classify(self, text: str):
+        original_text = text
+        cleaned = self.cleaner.clean(text)
+        tokens = self.tokenizer.tokenize(cleaned)
+        tokens = self.normalizer.normalize(tokens)
+        entities = self.entity_extractor.extract(original_text)
+
+        scored_intents = []
+
+        for intent_name, intent_config in self.intents_config.items():
+
+            exact_matches = self.pattern_matcher.match(
+                cleaned, intent_config.get("patterns", [])
+            )
+
+            regex_matches, regex_entities = self.regex_engine.match(
+                original_text, intent_config.get("regex_patterns", [])
+            )
+
+            keyword_score = self.keyword_matcher.match(
+                tokens, intent_config.get("keywords", {})
+            )
+
+            combined_entities = {**entities, **regex_entities}
+
+            penalties = self.rule_engine.apply_rules(
+                intent_config, tokens, combined_entities
+            )
+
+            score = self.scorer.calculate(
+                exact_matches,
+                regex_matches,
+                keyword_score,
+                len(combined_entities),
+                penalties,
+            )
+
+            scored_intents.append(
+                {
+                    "intent": intent_name,
+                    "score": score,
+                    "priority": intent_config.get("priority", 0),
+                    "entity_count": len(combined_entities),
+                    "entities": combined_entities,
+                }
+            )
+
+        return scored_intents

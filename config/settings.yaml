@@ -1,0 +1,25 @@
+application:
+  name: "Chatbot Intent Engine"
+  version: "1.0.0"
+  debig: true
+
+preprocessing:
+  lowercase: true
+  remove_punctuation: true
+  remove_stopwords: false
+  lemmatization: false
+
+entity_extraction:
+  enable_city_detection: true
+  enable_order_id_detection: true
+  enable_data_detection: true
+
+logging:
+  level: "INFO"
+  log_to_file: true
+  log_file: "logs/chatbot.log"
+
+intent_engine:
+  global_confidence_threshold: 4
+  enable_multi_intent: false
+  cache_enabled: false

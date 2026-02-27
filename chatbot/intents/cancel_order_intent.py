@@ -34,4 +34,13 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from .base_intent import BaseIntent
 
+
+# --------------------------------------------------
+# cancel order intent
+# --------------------------------------------------
+class CancelOrderIntent(BaseIntent):
+
+    def __init__(self):
+        super().__init__("CancelOrder")

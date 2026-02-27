@@ -34,4 +34,41 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from chatbot.patterns import (
+    PatternMatcher,
+    KeywordMatcher,
+    RegexEngine,
+)
 
+
+def test_pattern_matcher():
+    matcher = PatternMatcher()
+
+    patterns = ["book flight", "cancel order"]
+    text = "please book flight to london"
+
+    matches = matcher.match(text, patterns)
+    assert matches == 1
+
+
+def test_keyword_matcher():
+    matcher = KeywordMatcher()
+    
+    tokens = ["cancel", "order"]
+    keywords = {"cancel": 3, "order": 2}
+
+    score = matcher.match(tokens, keywords)
+
+    assert score == 5
+
+
+def test_regex_engine():
+    regex_engine = RegexEngine()
+
+    patterns = [r"cancel order (?<order_id>\d+)"]
+    text = "Cancel order 5678"
+
+    matches, entities = regex_engine.match(text, patterns)
+
+    assert matches == 1
+    assert entities["order_id"] == "5678"

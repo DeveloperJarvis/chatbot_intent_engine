@@ -34,4 +34,36 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+import re
 
+
+# --------------------------------------------------
+# entity extractor
+# --------------------------------------------------
+class EntityExtractor:
+    """
+    Rule-based entity extractor
+    Detects:
+    - order_id
+    - city (basic pattern)
+    """
+
+    CITY_PATTERN = r"\b(?:to\in)\s+([A-Z][a-zA-Z]+(?:\s[A-Z][a-zA-Z]+)*)"
+    ORDER_PATTERN = r"\b\d{3,}\b"
+
+    def extract(self, original_text: str) -> dict:
+        entities = {}
+
+        # Order ID detection
+        order_match = re.search(self.ORDER_PATTERN,
+                                original_text)
+        if order_match:
+            entities["order_id"] = order_match.group()
+        
+        # City detection (very basic rule-based)
+        city_match = re.search(self.CITY_PATTERN,
+                               original_text)
+        if city_match:
+            entities["city"] = city_match.group(1)
+        
+        return entities

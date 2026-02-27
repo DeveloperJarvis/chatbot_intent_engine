@@ -34,4 +34,38 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+import re
+import string
 
+
+# --------------------------------------------------
+# text cleaner
+# --------------------------------------------------
+class TextCleaner:
+    """
+    Handles text cleaning operations
+    """
+
+    def __init__(
+            self,
+            lowercase: bool = True,
+            remove_punctuation: bool = True,
+        ):
+        self.lowercase = lowercase
+        self.remove_punctuation = remove_punctuation
+    
+    def clean(self, text: str) -> str:
+        if not text:
+            return ""
+        
+        if self.lowercase:
+            text = text.lower()
+        
+        if self.remove_punctuation:
+            text = text.translate(
+                str.maketrans("", "", string.punctuation)
+            )
+        
+        text = re.sub(r"\s+", " ", text).strip()
+
+        return text

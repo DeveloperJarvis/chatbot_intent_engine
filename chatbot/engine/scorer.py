@@ -35,3 +35,43 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# intent scorer
+# --------------------------------------------------
+class IntentScorer:
+    """
+    Calculates intent score based on:
+    - Exact match
+    - Regex match
+    - Keyword score
+    - Entity bonus
+    - Rule penalties
+    """
+
+    def __init__(self, rule_config: dict):
+        weights = rule_config.get("scoring_weights", {})
+        self.exact_weight = weights.get("exact_match", 5)
+        self.regex_weight = weights.get("regex_match", 4)
+        self.keyword_multiplier = weights.get(
+            "keyword_match_multiplier", 1
+        )
+        self.entity_bonus = weights.get("entity_bonus", 2)
+    
+    def calculate(
+            self,
+            exact_matches: int,
+            regex_matches: int,
+            keyword_score: int,
+            entity_count: int,
+            penalties:int,
+    ) -> int:
+
+        score = 0
+        score += exact_matches * self.exact_weight
+        score += regex_matches * self.regex_weight
+        score += keyword_score * self.keyword_multiplier
+        score += entity_count * self.entity_bonus
+        score += penalties
+
+        return score

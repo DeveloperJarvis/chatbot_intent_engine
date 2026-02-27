@@ -34,4 +34,44 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from chatbot.engine.intent_classifier import IntentClassifier
+from chatbot.engine.intent_resolver import IntentResolver
+from chatbot.handlers import (
+    BookingHandler,
+    OrderHandler,
+    FallbackHandler,
+)
+from chatbot.utils.contants import DEFAULT_FALLBACK_INTENT
 
+
+# --------------------------------------------------
+# chatbot engine
+# --------------------------------------------------
+class ChatbotEngine:
+    """
+    Orchestrates entire chatbot flow
+    """
+
+    def __init__(self, config):
+        self.config = config
+        self.classifier = IntentClassifier(config)
+        self.resolver = IntentResolver()
+
+        self.handlers = {
+            "BookFlight": BookingHandler(),
+            "CancelOrder": OrderHandler(),
+            DEFAULT_FALLBACK_INTENT: FallbackHandler(),
+        }
+    
+    def handle_message(self, text: str) -> str:
+        scored_intents = self.classifier.classify(text)
+
+        intent_name, entities = self.resolver.resolve(
+            scored_intents,
+            fallback_intent=DEFAULT_FALLBACK_INTENT,
+        )
+
+        handler = self.handlers.get(intent_name,
+                                    FallbackHandler())
+        
+        return handler.handle(entities)

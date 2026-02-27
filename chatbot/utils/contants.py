@@ -30,8 +30,17 @@
 # --------------------------------------------------
 # contants MODULE
 # --------------------------------------------------
-
+"""
+Global constants used across the system
+"""
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
 
+
+DEFAULT_FALLBACK_INTENT = "Fallback"
+
+SUPPORTED_ENTITY_TYPES = [
+    "city",
+    "order_id",
+]

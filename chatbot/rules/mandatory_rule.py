@@ -35,3 +35,30 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# mandatory entity rule
+# --------------------------------------------------
+class MandatoryEntityRule:
+    """
+    Validates required entities for an intent
+    """
+
+    def __init__(self, penalty: int = -3):
+        self.penalty = penalty
+
+    def apply(
+            self,
+            intent_config: dict,
+            extracted_entities: dict
+        ) -> int:
+        required = intent_config.get(
+            "required_entities", []
+        )
+        missing = [entity for entity in required
+                   if entity not in extracted_entities]
+        
+        if missing:
+            return self.penalty
+        
+        return 0

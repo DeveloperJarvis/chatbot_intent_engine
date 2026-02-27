@@ -1,0 +1,25 @@
+rules:
+  scoring_weights:
+    exact_match: 5
+    regex_match: 4
+    keyword_match_multiplier: 1
+    entity_bonus: 2
+    negative_penalty: -5
+
+  mandatory_entity_rule:
+    enabled: true
+    penalty_if_missing: -3
+
+  negative_keyword_rule:
+    enabled: true
+    penalty: -5
+
+  priority_rule:
+    enabled: true
+    resolve_tie_by:
+      - priority
+      - entity_count
+
+  fallback_rule:
+    enabled: true
+    fallback_intent_name: "Fallback"

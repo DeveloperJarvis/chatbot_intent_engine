@@ -34,4 +34,13 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from .pattern_matcher import PatternMatcher
+from .keyword_matcher import KeywordMatcher
+from .regex_engine import RegexEngine
 
+
+__all__ = [
+    "PatternMatcher",
+    "KeywordMatcher",
+    "RegexEngine",
+]

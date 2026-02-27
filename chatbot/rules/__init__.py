@@ -30,8 +30,21 @@
 # --------------------------------------------------
 # __init__ MODULE
 # --------------------------------------------------
-
+"""
+Rules module
+"""
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from .mandatory_rule import MandatoryEntityRule
+from .negative_rule import NegativeKeywordRule
+from .priority_rule import PriorityRule
+from .rule_engine import RuleEngine
 
+
+__all__ = [
+    "MandatoryEntityRule",
+    "NegativeKeywordRule",
+    "PriorityRule",
+    "RuleEngine",
+]

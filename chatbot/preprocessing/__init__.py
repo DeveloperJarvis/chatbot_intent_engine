@@ -30,8 +30,21 @@
 # --------------------------------------------------
 # __init__ MODULE
 # --------------------------------------------------
-
+"""
+Preprocessing module
+"""
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from .cleaner import TextCleaner
+from .tokenizer import Tokenizer
+from .normalizer import Normalizer
+from .entity_extractor import EntityExtractor
 
+
+__all__ = [
+    "TextCleaner",
+    "Tokenizer",
+    "Normalizer",
+    "EntityExtractor",
+]

@@ -1,0 +1,59 @@
+intents:
+  BookFight:
+    description: Handle flight booking requests
+    priority: 3
+    confidence_threshold: 6
+
+    patterns:
+      - "book a flight"
+      - "reserve a flight"
+      - "flight to {city}"
+      - "book ticket to {city}"
+
+    regex_patterns:
+      - "book.*flight.*to (?P<city>[a-zA-Z ]+)"
+      - "flight to (?P<city>[a-zA-Z ]+)"
+
+    keywords:
+      book: 2
+      reserve: 2
+      flight: 3
+      ticket: 1
+      travel: 1
+
+    required_entities:
+      - city
+
+    negative_keywords:
+      - cancel
+      - refund
+
+  CancelOrder:
+    description: Cancel an existing order
+    priority: 4
+    configence_threshold: 5
+
+    patterns:
+      - "cancel my order"
+      - "cancel order"
+      - "abort order"
+
+    regex_patterns:
+      - "cancel order (?P<order_id>\\d+)"
+      - "cancel my order (?P<order_id>\\d+)"
+
+    keywords:
+      cancel: 3
+      order: 2
+      abort: 2
+
+  Fallback:
+    description: Default fallback intent
+    priority: 0
+    configence_threshold: 0
+
+    patterns: []
+    regex_patterns: []
+    keywords: {}
+    required_entities: []
+    negative_keywords: []

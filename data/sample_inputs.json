@@ -1,0 +1,24 @@
+{
+    "samples": [
+        {
+            "id": 1,
+            "input": "Book a flight to Paris tomorrow"
+        },
+        {
+            "id": 2,
+            "input": "I want to reserve a ticket to New York"
+        },
+        {
+            "id": 3,
+            "input": "Cancel my order 12345"
+        },
+        {
+            "id": 4,
+            "input": "Please cancel order 9988"
+        },
+        {
+            "id": 5,
+            "input": "What is the weather today?"
+        }
+    ]
+}

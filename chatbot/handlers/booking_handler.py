@@ -35,3 +35,19 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# booking handler
+# --------------------------------------------------
+class BookingHandler:
+    """
+    Handles flight booking responses
+    """
+
+    def handle(self, entities: dict) -> str:
+        city = entities.get("city")
+
+        if not city:
+            return "Please provide destination city to book your flight."
+        
+        return f"Flight booking initiated for {city}. ✈️"

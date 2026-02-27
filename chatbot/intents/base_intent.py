@@ -35,3 +35,17 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# base intent
+# --------------------------------------------------
+class BaseIntent:
+    """
+    Abstract intent definition
+    """
+
+    def __init__(self, name: str):
+        self.name = name
+    
+    def execute(self, entities: dict):
+        raise NotImplementedError

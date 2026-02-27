@@ -35,3 +35,29 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# negative keyword rule
+# --------------------------------------------------
+class NegativeKeywordRule:
+    """
+    Penalizes intent if negative keywords are present
+    """
+
+    def __init__(self, penalty: int = -5):
+        self.penalty = penalty
+    
+    def apply(
+            self,
+            intent_config: dict,
+            tokens: dict,
+        ) -> int:
+        negative_keywords = intent_config.get(
+            "negative_keywords", []
+        )
+
+        for word in tokens:
+            if word in negative_keywords:
+                return self.penalty
+        
+        return 0

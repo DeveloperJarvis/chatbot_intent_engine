@@ -34,4 +34,15 @@
 # --------------------------------------------------
 # imports
 # --------------------------------------------------
+from .base_intent import BaseIntent
+from .book_flight_intent import BookFlightIntent
+from .cancel_order_intent import CancelOrderIntent
+from .fallback_intent import FallbackIntent
 
+
+__all__ = [
+    "BaseIntent",
+    "BookFlightIntent",
+    "CancelOrderIntent",
+    "FallbackIntent",
+]

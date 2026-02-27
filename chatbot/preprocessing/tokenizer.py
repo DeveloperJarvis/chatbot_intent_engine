@@ -35,3 +35,16 @@
 # imports
 # --------------------------------------------------
 
+
+# --------------------------------------------------
+# tokenizer
+# --------------------------------------------------
+class Tokenizer:
+    """
+    Simple whitespace tokenizer
+    """
+
+    def tokenize(self, text: str) -> list:
+        if not text:
+            return []
+        return text.split()
